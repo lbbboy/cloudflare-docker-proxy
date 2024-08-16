@@ -16,7 +16,6 @@ const routes = {
   "k8s.vernorboy.gq": "https://registry.k8s.io",
   "ghcr.vernorboy.gq": "https://ghcr.io",
   "cloudsmith.vernorboy.gq": "https://docker.cloudsmith.io",
-  "ecr.vernorboy.gq": "https://public.ecr.aws",
 
   // staging
   "docker-staging.vernorboy.gq": dockerHub,
@@ -44,6 +43,15 @@ async function handleRequest(request) {
         status: 404,
       }
     );
+  }
+  // return docs
+  if (url.pathname === "/") {
+    return new Response(DOCS, {
+      status: 200,
+      headers: {
+        "content-type": "text/html"
+      }
+    });
   }
   const isDockerHub = upstream == dockerHub;
   const authorization = request.headers.get("Authorization");
